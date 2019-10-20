@@ -1,0 +1,60 @@
+package Practise;
+import java.util.Scanner;
+public class try_name {
+
+	public static void main(String[] args) {
+		Scanner scan=new Scanner(System.in);
+		char [] sa=name();
+		System.out.println(sa);
+		int count=0;
+		while(true) {
+			System.out.println("猜吧");
+			String str= scan.nextLine().toUpperCase();
+			if(str.equals("exit")) {
+				System.out.println("下次再来吧");
+				break;
+			}
+			char [] input=str.toCharArray();
+			int [] result=check(sa,input);
+			if(result[1]==sa.length) {
+				int score=sa.length*100-count*10;
+				System.out.println("恭喜你猜对了");
+				System.out.println("得分"+score);
+				break;
+			}else {
+				count++;
+				System.out.println("猜对个数为："+result[0]+","+"位置对的个数为："+result[1]);
+			}
+		}
+	}
+	public static char [] name() {
+		char [] sa=new char[7];
+		char [] letter= {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+		boolean [] bas=new boolean[letter.length];
+		int index;
+		for(int i=0;i<sa.length;i++) {
+			do {
+				index=(int)(Math.random()*letter.length);
+			}while(bas[index]==true);
+			sa[i]=letter[index];
+			bas[index]=true;
+		}
+		return sa;
+	}
+	public static int [] check(char []sa,char []input) {
+		int [] result=new int[2];
+		for(int i=0;i<sa.length;i++) {
+			for(int j=0;j<input.length;j++) {
+				if(sa[i]==input[j]) {
+					result[0]++;
+					if(i==j) {
+						result[1]++;
+					}
+					break;
+				}
+			}
+		}
+		return result;
+		
+	}
+}
